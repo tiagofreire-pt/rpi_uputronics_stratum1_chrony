@@ -359,7 +359,7 @@ Enable the GNSSs of your choise. Here, for Europe, I'm using GPS, GLONASS (as lo
 
 ## ITFM (Jamming/Interferance Monitor)
 
-Click on `enable Jamming/Interferance Monitor` to enable it and change `Antenna Type" to "2 - Active" (if applicable).
+Click on `enable Jamming/Interferance Monitor` to enable it and change `Antenna Type` to "2 - Active" (if applicable).
 
 ![](./img/u-center/ITFM.JPG)
 
