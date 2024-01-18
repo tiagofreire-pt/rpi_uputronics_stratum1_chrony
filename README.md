@@ -155,10 +155,13 @@ KERNEL=="ttyAMA0", RUN+="/bin/setserial /dev/ttyAMA0 low_latency"
 > sudo sed -i `s/CPU_DEFAULT_GOVERNOR="\${CPU_DEFAULT_GOVERNOR:-ondemand}"/CPU_DEFAULT_GOVERNOR="\${CPU_DEFAULT_GOVERNOR:-performance}"/; s/CPU_ONDEMAND_UP_THRESHOLD="\${CPU_ONDEMAND_UP_THRESHOLD:-50}"/CPU_ONDEMAND_UP_THRESHOLD="\${CPU_ONDEMAND_UP_THRESHOLD:-10}"/; s/CPU_ONDEMAND_DOWN_SAMPLING_FACTOR="\${CPU_ONDEMAND_DOWN_SAMPLING_FACTOR:-50}"/CPU_ONDEMAND_DOWN_SAMPLING_FACTOR="\${CPU_ONDEMAND_DOWN_SAMPLING_FACTOR:-10}"/` /etc/init.d/raspi-config
 
 
-## Disabling the fake hardware clock, on Raspberry Pi OS
+## Disable the fake hardware clock, on Raspberry Pi OS
 > sudo systemctl disable --now fake-hwclock
+> 
 > sudo update-rc.d -f fake-hwclock remove
+> 
 > sudo apt-get remove fake-hwclock -y
+> 
 > sudo sed -i `/if \[ -e \/run\/systemd\/system \] ; then/,/\/sbin\/hwclock --rtc=$dev --hctosys/ s/^/#/` /lib/udev/hwclock-set
 	
 
