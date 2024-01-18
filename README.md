@@ -365,7 +365,7 @@ Click on `enable Jamming/Interferance Monitor` to enable it and change `Antenna 
 
 ## NAV5 - Stationaty Dynamic Model
 
-Change `Dynamic Model" to "2 - Stationary", to improve the timming accuracy on the device.
+Change `Dynamic Model` to "2 - Stationary", to improve the timming accuracy on the device.
 
 ![](./img/u-center/NAV5.JPG)
 
