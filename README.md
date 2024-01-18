@@ -389,13 +389,13 @@ Click on `Send`, at the lower left corner.
 > [!WARNING] 
 > This is optional! Proceed with caution and at your own risk!
 
+## Check and acknowledge the pinout of this GPS expansion HAT
+- GPS Expansion Board from Uputronics: https://pinout.xyz/pinout/uputronics_gps_expansion_board
+
 ## Check and acknowledge the logical topology of your particular SoC setup, on the PNG image generated
 > sudo apt update && sudo apt install hwloc -y
 >
 > lstopo --logical --output-format png > \`hostname\`.png
-
-## Check and acknowledge the the pinout of these GPS expansions
-- GPS Expansion Board from Uputronics: https://pinout.xyz/pinout/uputronics_gps_expansion_board
 
 ## Disable and stop unnecessary services, reducing cpu time consumption, latency and jitter
 > sudo systemctl disable --now alsa-restore.service
