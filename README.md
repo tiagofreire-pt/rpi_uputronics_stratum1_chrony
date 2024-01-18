@@ -50,7 +50,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 **Optional** :
 - 3D printed case for housing the fully assembled server **(RPI 5B)**:
-  > I suggest this [top](./stl/case_5B_top_custom.stl) and this [bottom](case_5B_bottom_custom.stl) parts.
+  > I suggest this [case](./files/Rpi%205b%20case%20all%20v3.3mf).
   > PLA or PETG are generally appropriate, depending on the ambient temperature and environment you`ll apply this server in.
 - Outdoor GPS active antenna with 28dB Gain, inline powered at 3-5V DC, with 5 meters of cable lenght and SMA male connector
 
