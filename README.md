@@ -5,9 +5,9 @@ Can be prepared to be used with *off-the-grid* applications such as IoT in remot
 
 The end result with a Raspberry Pi 5B and an Uputronics GPS/RTC HAT Ublox M8 engine vs 6.4:
 
-![The Server Fully Assembled](./img/rpi_fully_assembled.JPG)
+![The Server Fully Assembled](./img/rpi_5b_fully_assembled.JPG)
 
-This is my recipe for Raspberry PI OS lite `Bookworm`, kernel  6.1.72-v8-16k+.
+This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 ## Achievements @ January 2024:
 - [X] ns local clock timekeeping (std dev < 200 ns on PPS source)
@@ -25,7 +25,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel  6.1.72-v8-16k+.
 ## Checklist aiming a low latency and jitter environment @ January 2024:
 - [X] Research system hardware topology, using lscpu 
 - [X] Determine which CPU sockets and I/O slots are directly connected.
-- [X] Follow hardware manufacturer's guidelines for low latency hardware tuning.
+- [X] Follow hardware manufacturer`s guidelines for low latency hardware tuning.
 - [X] Ensure that adapter cards are installed in the most performant I/O.
 - [X] Ensure that CPU/memory/storage is installed and operating at its **nominal** supported frequency.
 - [X] Make sure the OS is fully updated.
@@ -51,7 +51,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel  6.1.72-v8-16k+.
 **Optional** :
 - 3D printed case for housing the fully assembled server **(RPI 5B)**:
   > I suggest this [top](./stl/case_5B_top_custom.stl) and this [bottom](case_5B_bottom_custom.stl) parts.
-  > PLA or PETG are generally appropriate, depending on the ambient temperature and environment you'll apply this server in.
+  > PLA or PETG are generally appropriate, depending on the ambient temperature and environment you`ll apply this server in.
 - Outdoor GPS active antenna with 28dB Gain, inline powered at 3-5V DC, with 5 meters of cable lenght and SMA male connector
 
 # Setup the server
@@ -133,15 +133,15 @@ Add the content:
 KERNEL=="ttyAMA0", RUN+="/bin/setserial /dev/ttyAMA0 low_latency"
 ```
 
-## Force the CPU governor from boot, being always 'performance', aiming better timekeeping resolution
-> sudo sed -i 's/CPU_DEFAULT_GOVERNOR="\${CPU_DEFAULT_GOVERNOR:-ondemand}"/CPU_DEFAULT_GOVERNOR="\${CPU_DEFAULT_GOVERNOR:-performance}"/; s/CPU_ONDEMAND_UP_THRESHOLD="\${CPU_ONDEMAND_UP_THRESHOLD:-50}"/CPU_ONDEMAND_UP_THRESHOLD="\${CPU_ONDEMAND_UP_THRESHOLD:-10}"/; s/CPU_ONDEMAND_DOWN_SAMPLING_FACTOR="\${CPU_ONDEMAND_DOWN_SAMPLING_FACTOR:-50}"/CPU_ONDEMAND_DOWN_SAMPLING_FACTOR="\${CPU_ONDEMAND_DOWN_SAMPLING_FACTOR:-10}"/' /etc/init.d/raspi-config
+## Force the CPU governor from boot, being always `performance`, aiming better timekeeping resolution
+> sudo sed -i `s/CPU_DEFAULT_GOVERNOR="\${CPU_DEFAULT_GOVERNOR:-ondemand}"/CPU_DEFAULT_GOVERNOR="\${CPU_DEFAULT_GOVERNOR:-performance}"/; s/CPU_ONDEMAND_UP_THRESHOLD="\${CPU_ONDEMAND_UP_THRESHOLD:-50}"/CPU_ONDEMAND_UP_THRESHOLD="\${CPU_ONDEMAND_UP_THRESHOLD:-10}"/; s/CPU_ONDEMAND_DOWN_SAMPLING_FACTOR="\${CPU_ONDEMAND_DOWN_SAMPLING_FACTOR:-50}"/CPU_ONDEMAND_DOWN_SAMPLING_FACTOR="\${CPU_ONDEMAND_DOWN_SAMPLING_FACTOR:-10}"/` /etc/init.d/raspi-config
 
 
 ## Disabling the fake hardware clock, on Raspberry Pi OS
 > sudo systemctl disable --now fake-hwclock
 > sudo update-rc.d -f fake-hwclock remove
 > sudo apt-get remove fake-hwclock -y
-> sudo sed -i '/if \[ -e \/run\/systemd\/system \] ; then/,/\/sbin\/hwclock --rtc=$dev --hctosys/ s/^/#/' /lib/udev/hwclock-set
+> sudo sed -i `/if \[ -e \/run\/systemd\/system \] ; then/,/\/sbin\/hwclock --rtc=$dev --hctosys/ s/^/#/` /lib/udev/hwclock-set
 	
 
 ## Reboot to apply the system configurations
@@ -254,7 +254,7 @@ ratelimit interval 1 burst 16 leak 2
 clientloglimit 10000000
 
 # This directive enables kernel synchronisation (every 11 minutes) of the
-# real-time clock. Note that it can’t be used along with the 'rtcfile' directive.
+# real-time clock. Note that it can’t be used along with the `rtcfile` directive.
 rtcsync
 
 # Step the system clock instead of slewing it if the adjustment is larger than
@@ -326,43 +326,43 @@ Using U-Center vs 23.08 or better, open the communication through an USB-C cable
 
 ## NMEA - Enable support for GALILEO GNSS.
 
-Change the 'NMEA Version' to "4.10". This should ativate NMEA support for the GALILEO messages.
+Change the `NMEA Version` to "4.10". This should ativate NMEA support for the GALILEO messages.
 
 ![](./img/u-center/NMEA.JPG)
 
 ## GNSSs
 
-Enable the GNSSs of your choise. Here, for Europe, I'm using GPS, GLONASS (as long it's viable) and GALILEO:
+Enable the GNSSs of your choise. Here, for Europe, I`m using GPS, GLONASS (as long it`s viable) and GALILEO:
 
 ![](./img/u-center/GNSS.JPG)
 
 ## ITFM (Jamming/Interferance Monitor)
 
-Click on 'enable Jamming/Interferance Monitor' to enable it and change 'Antenna Type" to "2 - Active" (if applicable).
+Click on `enable Jamming/Interferance Monitor` to enable it and change `Antenna Type" to "2 - Active" (if applicable).
 
 ![](./img/u-center/ITFM.JPG)
 
 ## NAV5 - Stationaty Dynamic Model
 
-Change 'Dynamic Model" to "2 - Stationary", to improve the timming accuracy on the device.
+Change `Dynamic Model" to "2 - Stationary", to improve the timming accuracy on the device.
 
 ![](./img/u-center/NAV5.JPG)
 
 ## PMS - Power Management Setup
 
-Change 'Setup ID' to "0 - Full Power" to allow a small gain on better timming accuracy.
+Change `Setup ID` to "0 - Full Power" to allow a small gain on better timming accuracy.
 
 ![](./img/u-center/PMS.JPG)
 
 ## TP5 - Time Pulse refinement
 
-Change 'Cable Delay' value to the one fitting your setup. For example, with the XXXXX antena and 5 meters of RG-174 cable, the expected value should be "25" nanoseconds.
+Change `Cable Delay` value to the one fitting your setup. For example, with the XXXXX antena and 5 meters of RG-174 cable, the expected value should be "25" nanoseconds.
 
 ![](./img/u-center/TP5.JPG)
 
 ## Saving settings to EEPROM
 
-Click on 'Send', at the lower left corner.
+Click on `Send`, at the lower left corner.
 
 ![](./img/u-center/CFG.JPG)
 
@@ -452,7 +452,7 @@ Add this ```noswap```, after this ```rootfstype=ext4```, and save.
 >
 > sudo reboot
 
-That's all! :-)
+That`s all! :-)
 
 # References
 - https://store.uputronics.com/files/Uputronics%20Raspberry%20Pi%20GPS%20RTC%20Board%20Datasheet.pdf
