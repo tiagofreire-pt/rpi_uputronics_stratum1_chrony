@@ -31,7 +31,14 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 - [X] add support for the internal hardware RTC on the Rpi 5B.
 - [ ] correct the timekeeping skew from CPU temperature flutuation
 
-![Chrony Source Statistics after 1 day of uptime](./img/chrony_tracking_jan_2024.JPG)
+Chrony vs 4.5 `server` tracking statistics after 1 day of uptime:
+
+![Chrony tracking after 1 day of uptime](./img/chrony_tracking_jan_2024.JPG)
+
+Chrony vs 4.5 `client` tracking statistics after 1 day of uptime:
+
+![Chrony tracking after 1 day of uptime](./img/nanosecond_ntp_lan_jan_2024.JPG)
+
 
 ## Checklist aiming a low latency and jitter environment @ January 2024:
 - [X] Research system hardware topology, using lscpu 
