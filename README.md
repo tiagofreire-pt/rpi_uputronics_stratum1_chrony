@@ -332,7 +332,7 @@ Change the `NMEA Version` to "4.10". This should ativate NMEA support for the GA
 
 ## GNSSs
 
-Enable the GNSSs of your choise. Here, for Europe, I`m using GPS, GLONASS (as long it`s viable) and GALILEO:
+Enable the GNSSs of your choise. Here, for Europe, I'm using GPS, GLONASS (as long it's viable) and GALILEO:
 
 ![](./img/u-center/GNSS.JPG)
 
@@ -356,7 +356,7 @@ Change `Setup ID` to "0 - Full Power" to allow a small gain on better timming ac
 
 ## TP5 - Time Pulse refinement
 
-Change `Cable Delay` value to the one fitting your setup. For example, with the XXXXX antena and 5 meters of RG-174 cable, the expected value should be "25" nanoseconds.
+Change `Cable Delay` value to the one fitting your setup. For example, with the uBlox ANN-MB Active GPS Patch antena and 5 meters of RG-174 cable, the expected value should be "25" nanoseconds.
 
 ![](./img/u-center/TP5.JPG)
 
