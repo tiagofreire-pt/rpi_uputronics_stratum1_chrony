@@ -10,20 +10,20 @@ The end result with a Raspberry Pi 5B and an Uputronics GPS/RTC HAT Ublox M8 eng
 This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 ## Achievements @ January 2024:
-- [X] ns local clock timekeeping (std dev < 200 ns on PPS source)
-- [X] ns timekeeping across multiple networks (RMS offset < 20 ns)
-- [X] stable operation with low frequency value (usually ~ 3 ppm)
-- [X] serve time to more than 160 clients (capable of many more)
-- [X] optimize the Ublox M8 chip for better timming accuracy
-- [X] set the serial baudrate to its maximum (up to 115200 bps)
+- [X] ns local clock timekeeping (std dev < 200 ns on PPS source).
+- [X] ns timekeeping across multiple networks (RMS offset < 40 ns).
+- [X] stable operation with low frequency value (usually ~ 3 ppm).
+- [X] serve time to more than 160 clients (capable of many more).
+- [X] optimize the Ublox M8 chip for better timming accuracy.
+- [X] set the serial baudrate to its maximum (up to 115200 bps).
 - [X] provide hardware timestamping for NTP and PTP packets on the Rpi 5B.
 - [X] add support for the internal hardware RTC on the Rpi 5B.
-- [ ] correct the timekeeping skew from CPU temperature flutuation
+- [ ] correct the timekeeping skew from CPU temperature flutuation.
 
 ![Chrony Source Statistics after 1 day of uptime](./img/chrony_tracking_jan_2024.JPG)
 
 ## Checklist aiming a low latency and jitter environment @ January 2024:
-- [X] Research system hardware topology, using lscpu 
+- [X] Research system hardware topology, using lscpu .
 - [X] Determine which CPU sockets and I/O slots are directly connected.
 - [X] Follow hardware manufacturer`s guidelines for low latency hardware tuning.
 - [X] Ensure that adapter cards are installed in the most performant I/O.
