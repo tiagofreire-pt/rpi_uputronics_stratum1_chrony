@@ -9,21 +9,32 @@ The end result with a Raspberry Pi 5B and an Uputronics GPS/RTC HAT Ublox M8 eng
 
 This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
+
+# Index
+
+- [Achievements](./README.md#achievements--january-2024)
+- [List of materials and tools needed](./README.md#list-of-materials-and-tools-needed)
+- [Setup the server](./README.md##setup-the-server)
+- [Advanced Ublox M8 chip tuning](./README.md##advanced-ublox-m8-chip-tuning)
+- [Advanced system tuning](./README.md##advanced-system-tuning)
+- [References](./README.md#references)
+
+
 ## Achievements @ January 2024:
-- [X] ns local clock timekeeping (std dev < 200 ns on PPS source).
-- [X] ns timekeeping across multiple networks (RMS offset < 40 ns).
-- [X] stable operation with low frequency value (usually ~ 3 ppm).
-- [X] serve time to more than 160 clients (capable of many more).
-- [X] optimize the Ublox M8 chip for better timming accuracy.
-- [X] set the serial baudrate to its maximum (up to 115200 bps).
+- [X] ns local clock timekeeping (std dev < 200 ns on PPS source)
+- [X] ns timekeeping across multiple networks (RMS offset < 20 ns)
+- [X] stable operation with low frequency value (usually ~ 3 ppm)
+- [X] serve time to more than 160 clients (capable of many more)
+- [X] optimize the Ublox M8 chip for better timming accuracy
+- [X] set the serial baudrate to its maximum (up to 115200 bps)
 - [X] provide hardware timestamping for NTP and PTP packets on the Rpi 5B.
 - [X] add support for the internal hardware RTC on the Rpi 5B.
-- [ ] correct the timekeeping skew from CPU temperature flutuation.
+- [ ] correct the timekeeping skew from CPU temperature flutuation
 
 ![Chrony Source Statistics after 1 day of uptime](./img/chrony_tracking_jan_2024.JPG)
 
 ## Checklist aiming a low latency and jitter environment @ January 2024:
-- [X] Research system hardware topology, using lscpu .
+- [X] Research system hardware topology, using lscpu 
 - [X] Determine which CPU sockets and I/O slots are directly connected.
 - [X] Follow hardware manufacturer`s guidelines for low latency hardware tuning.
 - [X] Ensure that adapter cards are installed in the most performant I/O.
@@ -50,7 +61,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 **Optional** :
 - 3D printed case for housing the fully assembled server **(RPI 5B)**:
-  > I suggest this [case](./files/Rpi%205b%20case%20all%20v3.3mf).
+  > I suggest this [custom made case](./files/Rpi%205b%20case%20all%20v3.3mf).
   > PLA or PETG are generally appropriate, depending on the ambient temperature and environment you`ll apply this server in.
 - Outdoor GPS active antenna with 28dB Gain, inline powered at 3-5V DC, with 5 meters of cable lenght and SMA male connector
 
@@ -356,7 +367,7 @@ Change `Setup ID` to "0 - Full Power" to allow a small gain on better timming ac
 
 ## TP5 - Time Pulse refinement
 
-Change `Cable Delay` value to the one fitting your setup. For example, with the uBlox ANN-MB Active GPS Patch antena and 5 meters of RG-174 cable, the expected value should be "25" nanoseconds.
+Change `Cable Delay` value to the one fitting your setup. For example, with the uBlox ANN-MB Active GPS Patch Antenna and 5 meters of RG-174 cable, the expected value should be "25" nanoseconds.
 
 ![](./img/u-center/TP5.JPG)
 
