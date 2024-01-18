@@ -22,7 +22,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 ## Achievements @ January 2024:
 - [X] ns local clock timekeeping (std dev < 200 ns on PPS source)
-- [X] ns timekeeping across multiple networks (RMS offset < 20 ns)
+- [X] ns timekeeping across multiple networks (RMS offset < 40 ns)
 - [X] stable operation with low frequency value (usually ~ 3 ppm)
 - [X] serve time to more than 160 clients (capable of many more)
 - [X] optimize the Ublox M8 chip for better timming accuracy
