@@ -564,6 +564,7 @@ refclock PHC /dev/ptp0 tai refid PHC poll 0
 
 Check under the `sources` that your new `refclock` is working properly.
 
+![PHC refclock_Chrony](./img/phc_refclock_jan_2024.JPG)
 
 That`s all! :-)
 
