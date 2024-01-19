@@ -541,11 +541,11 @@ Create a systemd service for phc2sys:
 Description=Synchronizing PTP Hardware Clock from system time
 Documentation=man:phc2sys
 After=ptp4l.service
-Nice=-10
 
 [Service]
 Type=simple
 ExecStart=/usr/sbin/phc2sys -s CLOCK_REALTIME -c eth0 -w -u 1024
+Nice=-10
 
 [Install]
 WantedBy=multi-user.target
