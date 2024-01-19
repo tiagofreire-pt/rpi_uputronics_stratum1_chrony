@@ -521,6 +521,7 @@ Documentation=man:ptp4l
 [Service]
 Type=simple
 ExecStart=/usr/sbin/ptp4l -f /etc/linuxptp/ptp4l.conf
+Nice=-10
 
 [Install]
 WantedBy=multi-user.target
@@ -540,6 +541,7 @@ Create a systemd service for phc2sys:
 Description=Synchronizing PTP Hardware Clock from system time
 Documentation=man:phc2sys
 After=ptp4l.service
+Nice=-10
 
 [Service]
 Type=simple
