@@ -21,6 +21,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 
 ## Achievements @ January 2024:
+- [X] precision of 2^-26 (~15 ns).
 - [X] ns local clock timekeeping (std dev < 200 ns on PPS source).
 - [X] ns timekeeping across multiple networks (RMS offset < 40 ns).
 - [X] stable operation with low frequency value (usually ~ 3 ppm).
@@ -36,10 +37,13 @@ Chrony vs 4.5 `server` tracking statistics after 1 day of uptime:
 
 ![Chrony tracking after 1 day of uptime](./img/chrony_tracking_jan_2024.JPG)
 
-Chrony vs 4.5 `client` tracking statistics after 1 day of uptime:
+Chrony vs 4.0 `client` tracking statistics after 1 day of uptime:
 
 ![Chrony tracking after 1 day of uptime](./img/nanosecond_ntp_lan_jan_2024.JPG)
 
+Chrony vs 4.0 `client` tracking ntpdata of this server, after 1 day of uptime:
+
+![Chrony ntpdata after 1 day of uptime](./img/ntpdata_for_the_server_jan_2024.JPG)
 
 ## Checklist aiming a low latency and jitter environment @ January 2024:
 - [X] Research system hardware topology, using lscpu 
