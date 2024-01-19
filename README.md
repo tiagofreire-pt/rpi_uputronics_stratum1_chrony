@@ -21,15 +21,16 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 
 ## Achievements @ January 2024:
-- [X] ns local clock timekeeping (std dev < 200 ns on PPS source)
-- [X] ns timekeeping across multiple networks (RMS offset < 40 ns)
-- [X] stable operation with low frequency value (usually ~ 3 ppm)
-- [X] serve time to more than 160 clients (capable of many more)
-- [X] optimize the Ublox M8 chip for better timming accuracy
-- [X] set the serial baudrate to its maximum (up to 115200 bps)
+- [X] ns local clock timekeeping (std dev < 200 ns on PPS source).
+- [X] ns timekeeping across multiple networks (RMS offset < 40 ns).
+- [X] stable operation with low frequency value (usually ~ 3 ppm).
+- [X] serve time to more than 160 clients (capable of many more).
+- [X] optimize the Ublox M8 chip for better timming accuracy.
+- [X] set the serial baudrate to its maximum (up to 115200 bps).
 - [X] provide hardware timestamping for NTP and PTP packets on the Rpi 5B.
-- [X] add support for the internal hardware RTC on the Rpi 5B.
-- [ ] correct the timekeeping skew from CPU temperature flutuation
+- [X] provide PTP Hardware Clock (PHC) support under Chrony
+- [ ] add support for the internal hardware RTC on the Rpi 5B.
+- [ ] correct the timekeeping skew from CPU temperature flutuation.
 
 Chrony vs 4.5 `server` tracking statistics after 1 day of uptime:
 
@@ -563,7 +564,6 @@ refclock PHC /dev/ptp0 tai refid PHC poll 0
 
 Check under the `sources` that your new `refclock` is working properly.
 
-![PHC refclock_Chrony](./img/phc_refclock_jan_2024.JPG)
 
 That`s all! :-)
 
@@ -587,3 +587,4 @@ That`s all! :-)
 - https://www.dzombak.com/blog/2023/12/Stop-using-the-Raspberry-Pi-s-SD-card-for-swap.html
 - https://access.redhat.com/sites/default/files/attachments/201501-perf-brief-low-latency-tuning-rhel7-v2.1.pdf *(impressive guide aiming low latency on linux OS)*
 - https://blog.dan.drown.org/nic-interrupt-coalesce-impact-on-ntp/
+- https://quantum5.ca/2023/01/26/microsecond-accurate-time-synchronization-lan-with-ptp/
