@@ -157,11 +157,8 @@ KERNEL=="ttyAMA0", RUN+="/bin/setserial /dev/ttyAMA0 low_latency"
 
 ## Disable the fake hardware clock, on Raspberry Pi OS
 > sudo systemctl disable --now fake-hwclock
-> 
 > sudo update-rc.d -f fake-hwclock remove
-> 
 > sudo apt-get remove fake-hwclock -y
-> 
 > sudo sed -i `/if \[ -e \/run\/systemd\/system \] ; then/,/\/sbin\/hwclock --rtc=$dev --hctosys/ s/^/#/` /lib/udev/hwclock-set
 	
 
@@ -392,13 +389,13 @@ Click on `Send`, at the lower left corner.
 > [!WARNING] 
 > This is optional! Proceed with caution and at your own risk!
 
-## Check and acknowledge the pinout of this GPS expansion HAT
-- GPS Expansion Board from Uputronics: https://pinout.xyz/pinout/uputronics_gps_expansion_board
-
 ## Check and acknowledge the logical topology of your particular SoC setup, on the PNG image generated
 > sudo apt update && sudo apt install hwloc -y
 >
 > lstopo --logical --output-format png > \`hostname\`.png
+
+## Check and acknowledge the pinout of this GPS HAT
+- GPS Expansion Board from Uputronics: https://pinout.xyz/pinout/uputronics_gps_expansion_board
 
 ## Improve Chrony process priority, using systemd
 Due to the Chrony software has not the mechanism to reduce itself its `nice` process value, we'll force it through systemd:
@@ -408,6 +405,7 @@ Due to the Chrony software has not the mechanism to reduce itself its `nice` pro
 > sudo systemctl daemon-relead
 > 
 > sudo systemctl restart chrony
+
 
 ## Disable and stop unnecessary services, reducing cpu time consumption, latency and jitter
 > sudo systemctl disable --now alsa-restore.service
@@ -481,6 +479,91 @@ Add this ```noswap```, after this ```rootfstype=ext4```, and save.
 > sudo update-rc.d dphys-swapfile remove
 >
 > sudo reboot
+
+
+## Enable support for PTP Hardware Clock (PHC) on the Ethernet chip
+
+Raspberry Pi 5 has a PTP clock within the Ethernet chip, so we leverage that to have another high performance reference clock in Chrony
+
+> sudo apt update && sudo apt install linuxptp -y
+
+Create a new file `/etc/linuxptp/ptp4l.conf` just with this:
+
+> sudo nano /etc/linuxptp/ptp4l.conf
+
+```
+[global]
+# Only syslog every 1024 seconds
+summary_interval 10
+
+# Increase priority to allow this server to be chosen as the PTP grandmaster.
+priority1 10
+priority2 10
+
+[eth0]
+# My LAN does not have hardware switches compatible with Layer-2 PTP, just Layer-3 PTP.
+network_transport UDPv4
+delay_mechanism E2E
+```
+
+Create a systemd service for ptp4l:
+
+> sudo nano /etc/systemd/system/ptp4l.service
+
+Add this:
+
+```
+[Unit]
+Description=Precision Time Protocol service
+Documentation=man:ptp4l
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/ptp4l -f /etc/linuxptp/ptp4l.conf
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then, enable and start the ptp4l service:
+
+> sudo systemctl enable --now ptp4l.service
+
+
+Create a systemd service for phc2sys:
+
+> sudo nano /etc/systemd/system/phc2sys.service
+
+```
+[Unit]
+Description=Synchronizing PTP Hardware Clock from system time
+Documentation=man:phc2sys
+After=ptp4l.service
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/phc2sys -s CLOCK_REALTIME -c eth0 -w -u 1024
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then, enable and start the phc2sys service:
+
+> sudo systemctl enable --now phc2sys.service
+
+
+Add this new `refclock` into the 
+
+>  sudo nano /etc/chrony/chrony.conf
+
+```
+refclock PHC /dev/ptp0 tai refid PHC poll 0
+```
+
+Check under the `sources` that your new `refclock` is working properly.
+
+![PHC refclock_Chrony](./img/phc_refclock_jan_2024.JPG)
 
 That`s all! :-)
 
