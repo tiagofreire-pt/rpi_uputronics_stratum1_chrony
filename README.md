@@ -488,7 +488,9 @@ Add this ```noswap```, after this ```rootfstype=ext4```, and save.
 
 ## Enable support for PTP Hardware Clock (PHC) on the Ethernet chip
 
-Raspberry Pi 5 has a PTP clock within the Ethernet chip, so we leverage that to have another high performance reference clock in Chrony
+Raspberry Pi 5 has a PTP clock within the Ethernet chip, so we leverage that to have another high performance reference clock in Chrony. 
+
+As chronyd does	not synchronise	the NIC	clock, it assumes the clock is running free. So, we need to use ptp4l and phc2sys to sync the PHC with the system time.
 
 > sudo apt update && sudo apt install linuxptp -y
 
