@@ -1,5 +1,5 @@
 # Raspberry Pi 5B NTP Server - Stratum 1 (with Uputronics GPS HAT)
-A straightforward and optimized approach to achieve a cost-effective (€200) Stratum 1 NTP server, coordinated with highly precise PPS (Pulse Per Second) sourced from the GPS radio service plus NTP public servers across the internet to get the absolute time reference.
+A straightforward and optimized approach to achieve a cost-effective (€200) Stratum 1 NTP server, disciplined with highly precise PPS (Pulse Per Second) sourced from the GPS radio service plus NTP public servers across the internet to get the absolute time reference.
 
 Can be prepared to be used with *off-the-grid* applications such as IoT in remote locations/air-gapped systems or WAN connected IoT ones (as presented here).
 
@@ -30,7 +30,9 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 - [X] set the serial baudrate to its maximum (up to 115200 bps).
 - [X] provide hardware timestamping for NTP and PTP packets on the Rpi 5B.
 - [X] provide PTP Hardware Clock (PHC) support under Chrony
-- [ ] add support for the internal hardware RTC on the Rpi 5B.
+- [X] disable the internal hardware RTC DS9091 on the Rpi 5B.
+- [X] add support for the high precision RTC RV3028.
+- [X] disable GLONASS GNSS usage #slavaukraini
 - [ ] correct the timekeeping skew from CPU temperature flutuation.
 
 Chrony vs 4.5 `server` tracking statistics after 1 day of uptime:
@@ -111,6 +113,9 @@ dtparam=uart0_console=on
 # Enable uart 0 on GPIOs 14-15. Pi 5 only.
 dtoverlay=uart0-pi5
 
+# Disables the undocumented terrible RPi 5B RTC DS9091
+dtparam=rtc=off
+
 [all]
 # Uses the /dev/ttyAMA0 UART GPS instead of Bluetooth
 dtoverlay=miniuart-bt
@@ -186,6 +191,15 @@ The Output should be similar to:
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 70: -- -- -- -- -- -- -- --                         
 ```
+## Check the rv3028 RTC time
+> sudo hwclock -r
+
+If it does return the following error, instead of a date-time stamp:
+
+```hwclock: ioctl(RTC_RD_TIME) to /dev/rtc0 to read the time failed: Invalid argument```
+
+Execute the following command:
+> sudo hwclock --systohc -D --noadjfile --utc && sudo hwclock -r
 
 ## Setup the GPSd daemon
 > sudo nano /etc/default/gpsd
@@ -355,7 +369,7 @@ Change the `NMEA Version` to "4.10". This should ativate NMEA support for the GA
 
 ## GNSSs
 
-Enable the GNSSs of your choise. Here, for Europe, I'm using GPS, GLONASS (as long it's viable) and GALILEO:
+Enable the GNSSs of your choise. Here, for Europe, I'm using `GPS`, `GALILEO` and the SBAS `EGNOS` (no longer `GLONASS`):
 
 ![](./img/u-center/GNSS.JPG)
 
@@ -523,6 +537,7 @@ Add this:
 [Unit]
 Description=Precision Time Protocol service
 Documentation=man:ptp4l
+After=network-online.target
 
 [Service]
 Type=simple
