@@ -66,7 +66,7 @@ Chrony vs 4.0 `client` tracking ntpdata of this server, after 1 day of uptime:
 # List of materials and tools needed
 
 **Mandatory**:
-- 40 pin header spacer (if using the genuine active cooler)
+- 40 pin header 10mm spacer (if using the genuine active cooler)
 - SD Card with 8GB or more
 - USB SD Card reader or other similar device to install Raspberry PI OS on the SD Card.
 - Raspberry PI 5B, with a suitable power adaptor
@@ -76,6 +76,7 @@ Chrony vs 4.0 `client` tracking ntpdata of this server, after 1 day of uptime:
 **Optional** :
 - 3D printed case for housing the fully assembled server **(RPI 5B)**:
   > I suggest this [custom made case](./files/Rpi%205b%20case%20all%20v3.3mf).
+  ![Rpi 5b custom case](./img/rpi_5b_case_v3.JPG)
   > PLA or PETG are generally appropriate, depending on the ambient temperature and environment you`ll apply this server in.
 - Outdoor GPS active antenna with 28dB Gain, inline powered at 3-5V DC, with 5 meters of cable lenght and SMA male connector
 
