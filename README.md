@@ -30,7 +30,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 - [X] set the serial baudrate to its maximum (up to 115200 bps).
 - [X] provide hardware timestamping for NTP and PTP packets on the Rpi 5B.
 - [X] provide PTP Hardware Clock (PHC) support under Chrony
-- [X] disable the internal hardware RTC DS9091 on the Rpi 5B.
+- [X] disable the internal hardware RTC DA9091 on the Rpi 5B.
 - [X] add support for the high precision RTC RV3028.
 - [X] disable GLONASS GNSS usage #slavaukraini
 - [ ] correct the timekeeping skew from CPU temperature flutuation.
@@ -114,7 +114,7 @@ dtparam=uart0_console=on
 # Enable uart 0 on GPIOs 14-15. Pi 5 only.
 dtoverlay=uart0-pi5
 
-# Disables the undocumented terrible RPi 5B RTC DS9091
+# Disables the undocumented terrible RPi 5B RTC DA9091
 dtparam=rtc=off
 
 [all]
