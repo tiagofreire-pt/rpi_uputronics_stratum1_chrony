@@ -114,11 +114,29 @@ dtparam=uart0_console=on
 # Enable uart 0 on GPIOs 14-15. Pi 5 only.
 dtoverlay=uart0-pi5
 
-# Disables the undocumented terrible RPi 5B RTC DA9091
+# Disables the undocumented RPi 5B RTC DA9091
 dtparam=rtc=off
 
+# Resets the Pi 5B PWN fan control setpoints
+dtparam=fan_temp0=50000
+dtparam=fan_temp0_hyst=5000
+dtparam=fan_temp0_speed=75
+
+dtparam=fan_temp1=60000
+dtparam=fan_temp1_hyst=5000
+dtparam=fan_temp1_speed=125
+
+dtparam=fan_temp2=67500
+dtparam=fan_temp2_hyst=5000
+dtparam=fan_temp2_speed=175
+
+dtparam=fan_temp3=75000
+dtparam=fan_temp3_hyst=5000
+dtparam=fan_temp3_speed=250
+
+
 [all]
-# Uses the /dev/ttyAMA0 UART GPS instead of Bluetooth
+# Uses the /dev/ttyAMA0 UART GNSS instead of Bluetooth
 dtoverlay=miniuart-bt
 
 # Disables Bluetooth for better accuracy and lower interferance - optional
@@ -129,15 +147,12 @@ dtoverlay=disable-wifi
 
 # For GPS Expansion Board from Uputronics
 dtparam=i2c_arm=on
-dtoverlay=i2c-rtc,rv3028,backup-switchover-mode=3
+dtoverlay=i2c-rtc,rv3028,wakeup-source,backup-switchover-mode=3
 dtoverlay=pps-gpio,gpiopin=18
 init_uart_baud=115200
 
 # Disables kernel power saving
 nohz=off
-
-# Disables Energy Efficient Ethernet - improves jitter and lag (~200us)
-dtparam=eee=off
 
 # Force CPU high speed clock
 force_turbo=1
@@ -360,7 +375,18 @@ Add the content:
 > [!WARNING] 
 > This is optional! Proceed with caution and at your own risk!
 
-Using U-Center vs 23.08 or better, open the communication through an USB-C cable with the GPS HAT, on a Windows PC. Open the Configuration Console (CTRL+F9) and edit accordingly:
+
+The procedure to do it locally, on the Rpi 5B, using `ubxtool` from the `gpsd` package, needs some preparation:
+
+> ubxtool -p MON-VER --device /dev/ttyAMA0
+
+If shows this: `WARNING:  protVer is 10.00, should be 18.00.  Hint: use option "-P 18.00"`
+
+Execute this (as recommended above):
+
+> export UBXOPTS="-P 18"
+
+Alternatively, using U-Center vs 23.08 or better, open the communication through an USB-C cable with the GPS HAT, on a Windows PC. Open the Configuration Console (CTRL+F9) and edit accordingly.
 
 ## NMEA - Enable support for GALILEO GNSS.
 
@@ -370,9 +396,18 @@ Change the `NMEA Version` to "4.10". This should ativate NMEA support for the GA
 
 ## GNSSs
 
-Enable the GNSSs of your choise. Here, for Europe, I'm using `GPS`, `GALILEO` and the SBAS `EGNOS` (no longer `GLONASS`):
+Enable the GNSSs of your choise. Here, for Europe, I'm using `GPS`, `GALILEO` (no longer `GLONASS` and the SBAS `EGNOS`):
 
 ![](./img/u-center/GNSS.JPG)
+
+Or:
+> ubxtool -e GALILEO --device /dev/ttyAMA0
+>
+> ubxtool -d GLONASS --device /dev/ttyAMA0
+>
+> ubxtool -d SBAS --device /dev/ttyAMA0
+>
+> ubxtool -p CFG-GNSS --device /dev/ttyAMA0
 
 ## ITFM (Jamming/Interferance Monitor)
 
@@ -386,11 +421,23 @@ Change `Dynamic Model` to "2 - Stationary", to improve the timming accuracy on t
 
 ![](./img/u-center/NAV5.JPG)
 
+Or:
+
+> ubxtool -p MODEL,2 --device /dev/ttyAMA0
+>
+> ubxtool -p CFG-NAV5 --device /dev/ttyAMA0
+
 ## PMS - Power Management Setup
 
 Change `Setup ID` to "0 - Full Power" to allow a small gain on better timming accuracy.
 
 ![](./img/u-center/PMS.JPG)
+
+Or:
+
+> ubxtool -p CFG-PMS,0 --device /dev/ttyAMA0
+>
+> ubxtool -p CFG-PMS --device /dev/ttyAMA0
 
 ## TP5 - Time Pulse refinement
 
@@ -403,6 +450,17 @@ Change `Cable Delay` value to the one fitting your setup. For example, with the 
 Click on `Send`, at the lower left corner.
 
 ![](./img/u-center/CFG.JPG)
+
+Or: 
+> ubxtool -p SAVE --device /dev/ttyAMA0
+
+If no errors were shown, **do not forget** to force a cold boot immediately as recommended by Ublox:
+
+> ubxtool -p COLDBOOT --device /dev/ttyAMA0
+
+> [!NOTE]
+> There it could be up to 12.5 minutes before time pulse is available again.
+
 
 # Advanced system tuning
 
@@ -596,7 +654,7 @@ That`s all! :-)
 # References
 - https://github.com/raspberrypi/linux/pull/5884 *(RV3028 `backup-switchover-mode` value definitions)*
 - https://store.uputronics.com/files/Uputronics%20Raspberry%20Pi%20GPS%20RTC%20Board%20Datasheet.pdf
-- https://store.uputronics.com/files/UBX-13003221.pdf
+- https://store.uputronics.com/files/UBX-13003221.pdf *or* https://content.u-blox.com/sites/default/files/products/documents/u-blox8-M8_ReceiverDescrProtSpec_UBX-13003221.pdf
 - https://wiki.polaire.nl/doku.php?id=dragino_lora_gps_hat_ntp
 - http://www.philrandal.co.uk/blog/archives/2019/04/entry_213.html
 - https://chrony.tuxfamily.org/doc/4.2/chrony.conf.html#tempcomp
