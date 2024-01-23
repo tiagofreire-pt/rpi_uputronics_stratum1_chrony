@@ -31,7 +31,7 @@ This is my recipe for Raspberry PI OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 - [X] provide hardware timestamping for NTP and PTP packets on the Rpi 5B.
 - [X] provide PTP Hardware Clock (PHC) support under Chrony
 - [X] disable the internal hardware RTC DA9091 on the Rpi 5B.
-- [X] add support for the high precision RTC RV3028.
+- [X] add full support for the high precision RTC RV3028, including a new overlay to avoid the `dmesg` error "Voltage low, data is invalid".
 - [X] disable GLONASS GNSS usage #slavaukraini
 - [ ] correct the timekeeping skew from CPU temperature flutuation.
 
@@ -129,7 +129,7 @@ dtoverlay=disable-wifi
 
 # For GPS Expansion Board from Uputronics
 dtparam=i2c_arm=on
-dtoverlay=i2c-rtc,rv3028
+dtoverlay=i2c-rtc,rv3028,backup-switchover-mode=3
 dtoverlay=pps-gpio,gpiopin=18
 init_uart_baud=115200
 
@@ -316,7 +316,7 @@ hwtimestamp *
 # set larger delay to allow the NMEA source to overlap with
 # the other sources and avoid the falseticker status
 # https://chrony.tuxfamily.org/faq.html#using-pps-refclock
-refclock SHM 0 poll 8 refid GPS precision 1e-1 offset 0.130 delay 0.2 noselect
+refclock SHM 0 poll 8 refid GPS precision 1e-1 offset 0.090 delay 0.2 noselect
 
 # Choose the one with best long term results
 refclock SHM 1 refid PPS precision 1e-7 prefer
