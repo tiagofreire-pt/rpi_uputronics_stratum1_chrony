@@ -1,5 +1,5 @@
 # Raspberry Pi 5B NTP Server - Stratum 1 (with Uputronics GPS HAT)
-A straightforward and optimized approach to achieve a cost-effective (€200) Stratum 1 NTP server, disciplined with highly precise PPS (Pulse Per Second) sourced from the GPS radio service plus NTP public servers across the internet to get the absolute time reference.
+A straightforward and optimized approach to achieve a cost-effective (€200) Stratum 1 NTP server, disciplined with highly precise PPS (Pulse Per Second) sourced from the GNSS radio service plus NTP public servers across the internet to get the absolute time reference.
 
 Can be prepared to be used with *off-the-grid* applications such as IoT in remote locations/air-gapped systems or WAN connected IoT ones (as presented here).
 
@@ -492,6 +492,7 @@ The Raspberry Pi OS does not have this setting, useful in extreme cases, forcing
 Add this ```noswap```, after this ```rootfstype=ext4```, and save.
 
 ## Disable sdcard swapping for improving its lifespan and reducing unnecessary I/O latency
+
 > sudo dphys-swapfile swapoff
 >
 > sudo dphys-swapfile uninstall
@@ -593,6 +594,7 @@ Check under the `sources` that your new `refclock` is working properly.
 That`s all! :-)
 
 # References
+- https://github.com/raspberrypi/linux/pull/5884 *(RV3028 `backup-switchover-mode` value definitions)*
 - https://store.uputronics.com/files/Uputronics%20Raspberry%20Pi%20GPS%20RTC%20Board%20Datasheet.pdf
 - https://store.uputronics.com/files/UBX-13003221.pdf
 - https://wiki.polaire.nl/doku.php?id=dragino_lora_gps_hat_ntp
