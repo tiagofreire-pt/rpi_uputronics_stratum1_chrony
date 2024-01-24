@@ -181,7 +181,7 @@ Then, fitted a quadratic curve to the data and calculated the system clock corre
 
 Replaced the data within `/etc/chrony/chrony.tempcomp` file, previously created, and restarted chrony.
 
-![Before and after](../img/tempcomp_temperature_frequency_before_after.JPG)
+![Before and after](../img/frequency_ppm_before_after_jan2024.JPG)
 
 
 
