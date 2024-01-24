@@ -95,7 +95,7 @@ Add this ```noswap```, after this ```rootfstype=ext4```, and save.
 >
 > sudo reboot
 
-## Reduing ethernet coalescence on RX and TX
+## Reducing ethernet coalescence on RX and TX
 
 Every ethernet adaptor uses the coalescence method to gather packets and sent them on a bulk, for better thoughput efficiecy. 
 
@@ -152,9 +152,9 @@ This could shave *circa* 40 usecs of response time over the `chrony ntpdata` sta
 
 ## Chrony temperature compensation - turning the your Rpi 5B into a quasi-TCXO
 
-Using this python code, I made a fast and empirical follow-up of the system clock frequency reported by `chrony tracking` over a range of temperatures, between 45ºC and 61ºC. Noticed a function minimum around 52ºC.
+Using [this python code](https://www.satsignal.eu/ntp/Raspberry-Pi-ntpheat.html), I made a fast and empirical follow-up of the system clock frequency reported by `chrony tracking` over a range of temperatures, between 45ºC and 61ºC. Noticed a function minimum around 52ºC.
 
-So, I traced the relationship data between CPU temperature and the system clock frequency, using this bash code, over several hours. 
+So, I traced the relationship data between CPU temperature and the system clock frequency, using [this bash code](./files/log_temp_freq_24h_v1.sh), over several hours. 
 
 For better accuracy, I created a hystheric temperature cycle using the fan control overlays, on `/boot/config.txt`:
 
@@ -179,10 +179,11 @@ dtparam=fan_temp3_speed=250
 
 Then, fitted a quadratic curve to the data and calculated the system clock correction with a 0.5ºC resolution, using a spreadsheet.
 
-Replaced the data within `/etc/chrony/chrony.tempcomp` file, previously created, and restarted chrony.
+Replaced the [data](../files/tempcomp_v1_24012024.txt) within `/etc/chrony/chrony.tempcomp` file, previously created, and restarted chrony.
+
+Is quite clear the adjustment of temperature compensation:
 
 ![Before and after](../img/frequency_ppm_before_after_jan2024.JPG)
-
 
 
 ## Enable support for PTP Hardware Clock (PHC) on the Ethernet chip
