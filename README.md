@@ -14,7 +14,7 @@ This is my recipe for Raspberry Pi OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 - [Achievements](./README.md#achievements--january-2024)
 - [List of materials and tools needed](./README.md#list-of-materials-and-tools-needed)
-- [Step-by-step tutorial](./README.md#step-by-step-tutorial.md)
+- [Step-by-step tutorial](./README.md#step-by-step-tutorial)
 - [Acknowledgments](./README.md#acknowledgments)
 - [References](./README.md#references)
 
