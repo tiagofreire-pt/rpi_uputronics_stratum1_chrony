@@ -115,3 +115,4 @@ For this tutorial, you have 3 major steps. Being the last 2 of them optional, bu
 - https://access.redhat.com/sites/default/files/attachments/201501-perf-brief-low-latency-tuning-rhel7-v2.1.pdf *(impressive guide aiming low latency on linux OS)*
 - https://blog.dan.drown.org/nic-interrupt-coalesce-impact-on-ntp/
 - https://quantum5.ca/2023/01/26/microsecond-accurate-time-synchronization-lan-with-ptp/
+- https://www.satsignal.eu/ntp/Raspberry-Pi-ntpheat.html
