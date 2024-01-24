@@ -14,9 +14,10 @@ This is my recipe for Raspberry Pi OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 - [Achievements](./README.md#achievements--january-2024)
 - [List of materials and tools needed](./README.md#list-of-materials-and-tools-needed)
-- [Setup the server](./README.md#setup-the-server)
-- [Advanced Ublox M8 chip tuning](./README.md#advanced-ublox-m8-chip-tuning)
-- [Advanced system tuning](./README.md#advanced-system-tuning)
+- [Setup the server](./steps/setup_the_server.md)
+- [Advanced Ublox M8 tuning](./steps/advanced_ublox_m8_tuning.md)
+- [Advanced system tuning](./steps/advanced_system_tuning.md)
+- [Acknowledgments](./README.md#acknowledgments)
 - [References](./README.md#references)
 
 
@@ -84,7 +85,7 @@ Chrony vs 4.0 `client` tracking ntpdata of this server, after 1 day of uptime:
 # Step-by-step tutorial
 For this tutorial, you have 3 major steps. Being the last 2 of them optional, but highly recommended, as achieves huge and superior accuracy and precision.
 
-1. [Setup the server](./steps/README.md)
+1. [Setup the server](./steps/setup_the_server.md)
 2. [Advanced Ublox M8 tuning](./steps/advanced_ublox_m8_tuning.md)
 3. [Advanced system tuning](./steps/advanced_system_tuning.md)
 
