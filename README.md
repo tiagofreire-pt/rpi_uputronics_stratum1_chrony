@@ -14,9 +14,7 @@ This is my recipe for Raspberry Pi OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 - [Achievements](./README.md#achievements--january-2024)
 - [List of materials and tools needed](./README.md#list-of-materials-and-tools-needed)
-- [Setup the server](./steps/setup_the_server.md)
-- [Advanced Ublox M8 tuning](./steps/advanced_ublox_m8_tuning.md)
-- [Advanced system tuning](./steps/advanced_system_tuning.md)
+- [Step-by-step tutorial](./README.md#step-by-step-tutorial.md)
 - [Acknowledgments](./README.md#acknowledgments)
 - [References](./README.md#references)
 
