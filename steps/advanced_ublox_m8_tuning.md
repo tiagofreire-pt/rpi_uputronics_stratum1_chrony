@@ -20,13 +20,13 @@ Alternatively, using U-Center vs 23.08 or better, open the communication through
 
 Change the `NMEA Version` to "4.10". This should ativate NMEA support for the GALILEO messages.
 
-![](./img/u-center/NMEA.JPG)
+![](../img/u-center/NMEA.JPG)
 
 ## GNSSs
 
 Enable the GNSSs of your choise. Here, for Europe, I'm using `GPS`, `GALILEO` (no longer `GLONASS` and the SBAS `EGNOS`):
 
-![GNSS](./img/u-center/GNSS.JPG)
+![GNSS](../img/u-center/GNSS.JPG)
 
 Or:
 > ubxtool -e GALILEO --device /dev/ttyAMA0
@@ -41,13 +41,13 @@ Or:
 
 Click on `enable Jamming/Interferance Monitor` to enable it and change `Antenna Type` to "2 - Active" (if applicable).
 
-![ITFM](./img/u-center/ITFM.JPG)
+![ITFM](../img/u-center/ITFM.JPG)
 
 ## NAV5 - Stationaty Dynamic Model
 
 Change `Dynamic Model` to "2 - Stationary", to improve the timming accuracy on the device.
 
-![NAV5](./img/u-center/NAV5.JPG)
+![NAV5](../img/u-center/NAV5.JPG)
 
 Or:
 
@@ -59,7 +59,7 @@ Or:
 
 Change `Setup ID` to "0 - Full Power" to allow a small gain on better timming accuracy.
 
-![PMS](./img/u-center/PMS.JPG)
+![PMS](../img/u-center/PMS.JPG)
 
 Or:
 
@@ -71,13 +71,13 @@ Or:
 
 Change `Cable Delay` value to the one fitting your setup. For example, with the uBlox ANN-MB Active GPS Patch Antenna and 5 meters of RG-174 cable, the expected value should be "25" nanoseconds.
 
-![TP5](./img/u-center/TP5.JPG)
+![TP5](../img/u-center/TP5.JPG)
 
 ## Saving settings to EEPROM
 
 Click on `Send`, at the lower left corner.
 
-![CFG](./img/u-center/CFG.JPG)
+![CFG](../img/u-center/CFG.JPG)
 
 Or: 
 > ubxtool -p SAVE --device /dev/ttyAMA0
