@@ -1,13 +1,13 @@
 # Raspberry Pi 5B NTP Server - Stratum 1 (with Uputronics GPS HAT)
-A straightforward and optimized approach to achieve a cost-effective (€200) Stratum 1 NTP server, disciplined with highly precise PPS (Pulse Per Second) sourced from the GNSS radio service plus NTP public servers across the internet to get the absolute time reference.
+A straightforward and highly optimized approach to achieve a cost-effective (€200) and high performance Stratum 1 NTP server, disciplined with highly precise PPS (Pulse Per Second) sourced from the GNSS radio service plus NTP public servers across the internet to get the absolute time reference.
 
 Can be prepared to be used with *off-the-grid* applications such as IoT in remote locations/air-gapped systems or WAN connected IoT ones (as presented here).
 
-The end result with a Raspberry Pi 5B and an Uputronics GPS/RTC HAT Ublox M8 engine vs 6.4:
+The end result with a fully assembled Raspberry Pi 5B and an Uputronics GPS/RTC HAT Ublox M8 engine vs 6.4:
 
 ![The Server Fully Assembled](./img/rpi_5b_fully_assembled.JPG)
 
-This is my recipe for Raspberry Pi OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
+This is my recipe for Raspberry Pi OS lite `Bookworm`, freshly installed, with kernel 6.1.72-v8-16k+.
 
 
 # Index
@@ -74,22 +74,6 @@ Chrony vs 4.0 `client` tracking statistics after 1 day of uptime:
 Chrony vs 4.0 `client` tracking ntpdata of this server, after 1 day of uptime:
 
 ![Chrony ntpdata after 1 day of uptime](./img/ntpdata_for_the_server_jan_2024.JPG)
-
-## Checklist aiming a low latency and jitter environment @ January 2024:
-- [X] Research system hardware topology, using lscpu 
-- [X] Determine which CPU sockets and I/O slots are directly connected.
-- [X] Follow hardware manufacturer`s guidelines for low latency hardware tuning.
-- [X] Ensure that adapter cards are installed in the most performant I/O.
-- [X] Ensure that CPU/memory/storage is installed and operating at its **nominal** supported frequency.
-- [X] Make sure the OS is fully updated.
-- [X] Enable network-latency tuned overlay settings.
-- [X] Verify that power management settings are correct and properly setup.
-- [X] Stop all unnecessary services/processes.
-- [ ] Unload unnecessary kernel modules *(to be assessed)*
-- [X] Apply low-latency kernel command line setup(s).
-- [X] Perform baseline latency tests.
-- [X] Iterate, making isolated tuning changes, testing between each change.
-
 
 # List of materials and tools needed
 
