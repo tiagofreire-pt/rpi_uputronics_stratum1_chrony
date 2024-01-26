@@ -13,6 +13,8 @@ This is my recipe for Raspberry Pi OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 # Index
 
 - [Achievements](./README.md#achievements--january-2024)
+- [Optimizations](./README.md#optimizations--january-2024)
+- [Sample Metrics](./README.md#sample-metrics) 
 - [List of materials and tools needed](./README.md#list-of-materials-and-tools-needed)
 - [Step-by-step tutorial](./README.md#step-by-step-tutorial)
 - [Acknowledgments](./README.md#acknowledgments)
@@ -20,20 +22,46 @@ This is my recipe for Raspberry Pi OS lite `Bookworm`, kernel 6.1.72-v8-16k+.
 
 
 ## Achievements @ January 2024:
-- [X] precision of 2^-26 (~15 ns).
-- [X] ns local clock timekeeping (std dev < 200 ns on PPS source).
-- [X] ns timekeeping across multiple networks (RMS offset < 40 ns).
-- [X] stable operation with ultra low frequency value (usually ~ 450 ppb).
-- [X] correct the timekeeping skew from CPU temperature flutuation.
-- [X] serve time to more than 160 clients (capable of many more).
-- [X] optimize the Ublox M8 chip for better timming accuracy.
-- [X] set the serial baudrate to its maximum (up to 115200 bps).
-- [X] provide hardware timestamping for NTP and PTP packets on the Rpi 5B.
-- [X] provide PTP Hardware Clock (PHC) support under Chrony.
-- [X] disable the internal hardware RTC DA9091 on the Rpi 5B.
-- [X] add full support for the high precision RTC RV3028, including a new overlay to avoid the `dmesg` error "Voltage low, data is invalid".
-- [X] disable GLONASS GNSS usage #slavaukraini
 
+| Scope         | Achievement   |   Value    |
+| ------------- |:-------------:| ---------: |
+| Timekeeping   | Precision     | ~ 2^(-26) s |
+| Timekeeping   | PPS Jitter    |  < 400 ns  |
+| Timekeeping   | Frequency     |  < 200 ppb |
+| Service       | Clients       |  > 160     |
+| Service       | RMS offset    |  < 100 ns  |
+
+
+## Optimizations @ January 2024:
+
+*(non exaustive)*
+
+- Chrony software optimization:
+  - Enabled DSCP higher priority packet stamping for reduced latency and jitter over the network time distribution;
+  - Enabled Hardware Timestamping over the ethernet BCM54213 PHY;
+  - Enabled directive to lock chronyd into RAM;
+  - Implemented temperature compensation, aiming reduced frequency value and its lower jitter.
+- Hardware optimization:
+  - Low latency hardware UART for NMEA messages;
+  - Forced constantly CPU clock and governor to its higher frequency for higher timekeeping resolution;
+  - Disabled WiFi and Bluetooth radios aiming lower eletromagnetic interferance against the GNSS radio;
+  - Reduced to the minimum coalescence values on the ethernet interface, for lower latency and jitter over the network time distribution;
+  - Enabled the usage of the ethernet PHC clock, as a secondary high precision reflock;
+  - Designed a custom case, with better hot airflow output and with higher thermal insulation for the oscilators on the Rpi 5B buttom face.
+- Operating system fine tuning:
+  - Disabled linux kernel power saving method, aiming reduced processes scheduling latency and jitter;
+  - Increased Chrony services to `-10` nice value, aiming higher process schedule priority for better timekeeping;
+  - Disabled unnecessary services, reducing CPU time consumption, latency and jitter;
+  - Disabled SWAP partition usage for lower file system and memory latency, over the SD Card.
+- Ublox M8 chip fine tuning:
+  - Enabled support for GALILEO GNSS for better UTC time reference;
+  - Disabled support for SBAS (reducing PPS jitter) and GLONASS GNSS (#slavaukraini);
+  - Enabled jamming/interferance monitoring for superior GNSS continuity;
+  - Enabled stationary dynamic model aiming reduced NMEA and PPS latency and jitter;
+  - Set the power management to full power, reducing latency and jitter;
+  - Set the antenna cable lenght latency for a better PPS time sync accuracy against UTC reference time.
+
+## Sample metrics:
 
 Chrony vs 4.5 `server` tracking statistics after 1 day of uptime:
 
