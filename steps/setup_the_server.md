@@ -252,7 +252,7 @@ refclock SHM 0 poll 8 refid GPS precision 1e-1 offset 0.090 delay 0.2 noselect
 
 # Choose the one with best long term results
 refclock SHM 1 refid PPS precision 1e-7 prefer
-refclock kPPS /dev/pps0 lock GPS maxlockage 2 poll 4 refid PPS precision 1e-7 prefer 
+refclock PPS /dev/pps0 lock GPS maxlockage 2 poll 4 refid kPPS precision 1e-7 prefer
 
 # Compares and saves the SoC temperature with the temperature correlation table bellow, every 30 seconds
 #tempcomp /sys/class/thermal/thermal_zone0/temp 30 /etc/chrony/chrony.tempcomp
