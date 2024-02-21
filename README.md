@@ -7,7 +7,7 @@ The end result with a fully assembled Raspberry Pi 5B and an Uputronics GPS/RTC 
 
 ![The Server Fully Assembled](./img/rpi_5b_fully_assembled.JPG)
 
-This is my recipe for Raspberry Pi OS lite `Bookworm`, freshly installed, with kernel 6.1.72-v8-16k+.
+This is my recipe for Raspberry Pi OS `lite` version `Bookworm`, freshly installed, with kernel 6.1.73-1+rpt1.
 
 
 # Index
