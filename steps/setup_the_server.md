@@ -15,14 +15,14 @@
 
 
 ## Disable the kernel support for the serial TTY
-> sudo nano /boot/cmdline.txt
+> sudo nano /boot/firmware/cmdline.txt
 
 Remove this ```console=serial0,115200``` and this (if applicable) ```kgdboc=ttyAMA0,115200``` sequence(s) only and save.
 
 
 ## Configure the Raspberry Pi
 
-Add this to your `/boot/config.txt` file:
+Add this to your `/boot/firmware/config.txt` file:
 
 ```
 [pi5]
