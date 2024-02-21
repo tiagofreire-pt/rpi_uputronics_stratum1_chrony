@@ -53,7 +53,7 @@ Due to the Chrony software has not the mechanism to reduce itself its `nice` pro
 > sudo systemctl disable --now x11-common.service
 
 ## Allocate the strictly minimum RAM from GPU to the OS system, as running headless
-Add this to your `/boot/config.txt` file under the `[ALL]`section:
+Add this to your `/boot/firmware/config.txt` file under the `[ALL]`section:
 
 ```
 # Allocates the base minimum gpu memory, as running headless
@@ -61,7 +61,7 @@ gpu_mem=16mb
 ``` 
 
 ## De-activates sound, aiming less resources and latency expected, as running headless
-Change this on your `/boot/config.txt` file, to:
+Change this on your `/boot/firmware/config.txt` file, to:
 
 ```
 # De-activates sound, aiming less resources, fewer latency and interferance expected, for a headless server
@@ -81,7 +81,7 @@ The Raspberry Pi OS does not have this setting, useful in extreme cases, forcing
 > sudo apt autoremove --purge -y
 
 ## Disable the support for Swap
-> sudo nano /boot/cmdline.txt
+> sudo nano /boot/firmware/cmdline.txt
 
 Add this ```noswap```, after this ```rootfstype=ext4```, and save.
 
@@ -156,7 +156,7 @@ Using [this python code](https://www.satsignal.eu/ntp/Raspberry-Pi-ntpheat.html)
 
 So, I traced the relationship data between CPU temperature and the system clock frequency, using [this bash code](./files/log_temp_freq_24h_v1.sh), over several hours. 
 
-For better accuracy, I created a hystheric temperature cycle using the fan control overlays, on `/boot/config.txt`:
+For better accuracy, I created a hystheric temperature cycle using the fan control overlays, on `/boot/firmware/config.txt`:
 
 ```
 ## New testing Pi 5B PWN fan control setpoints - your mileage may vary
