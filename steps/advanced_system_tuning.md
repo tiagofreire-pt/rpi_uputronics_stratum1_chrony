@@ -60,12 +60,20 @@ Add this to your `/boot/firmware/config.txt` file under the `[ALL]`section:
 gpu_mem=16mb
 ``` 
 
-## De-activates sound, aiming less resources and latency expected, as running headless
+## De-activate sound, aiming less resources and latency expected, as running headless
 Change this on your `/boot/firmware/config.txt` file, to:
 
 ```
 # De-activates sound, aiming less resources, fewer latency and interferance expected, for a headless server
 dtparam=audio=off
+```
+
+## Disable Energy Efficient Ethernet to improve jitter and lag (~200us)
+Add this to your `/boot/firmware/config.txt` file under the `[pi5]`section:
+
+```
+# Disables Energy Efficient Ethernet to improve jitter and lag (~200us)
+dtparam=eee=off
 ```
 
 ## Auto-restart 10 seconds after a Kernel panic
@@ -150,6 +158,31 @@ To revert to the default values:
 
 This could shave *circa* 40 usecs of response time over the `chrony ntpdata` statistics. Huge improvement on a NTP setup that has hardware timestamping and its higher accuracy.
 
+To make it persitent over restarts create a systemd service for eth0_coalescence:
+
+> sudo nano /etc/systemd/system/eth0_coalescence.service
+
+Add this:
+
+```
+[Unit]
+Description=Setting Speed
+Requires=network.target
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/ethtool -C eth0 tx-usecs 4 rx-usecs 4
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then, enable and start the eth0_coalescence service:
+
+> sudo systemctl enable --now eth0_coalescence.service
+
+
 ## Chrony temperature compensation - turning the your Rpi 5B into a quasi-TCXO
 
 Using [this python code](https://www.satsignal.eu/ntp/Raspberry-Pi-ntpheat.html), I made a fast and empirical follow-up of the system clock frequency reported by `chrony tracking` over a range of temperatures, between 45ºC and 61ºC. Noticed a function minimum around 52ºC.
@@ -203,12 +236,12 @@ Create a new file `/etc/linuxptp/ptp4l.conf` just with this:
 # Only syslog every 1024 seconds
 summary_interval 10
 
-# Increase priority to allow this server to be chosen as the PTP grandmaster.
+# Increase priority to allow this server to be chosen as the PTP grandmaster, default value is 128; alternatively set slaveOnly 1 for systems in client-only mode
 priority1 10
 priority2 10
 
 [eth0]
-# My LAN does not have hardware switches compatible with Layer-2 PTP, just Layer-3 PTP.
+# My LAN does not have hardware switches compatible with Layer-2 PTP, just Layer-3 PTP; comment out, depending on your situation
 network_transport UDPv4
 delay_mechanism E2E
 ```
@@ -251,7 +284,12 @@ After=ptp4l.service
 
 [Service]
 Type=simple
-ExecStart=/usr/sbin/phc2sys -s CLOCK_REALTIME -c eth0 -w -u 1024
+ExecStart=/usr/sbin/phc2sys -a -m -M 0 -u 1024
+# -a: turn on autoconfiguration
+# -m: print messages to the standard output
+# -M [num]: the number of the SHM segment used by ntpshm servo; default is 0, use 2 if combined with gpsd and npt/ntpsec
+# -u [num]: number of clock updates in summary stats; default is 0
+# Thanks to https://gpsd.gitlab.io/gpsd/gpsd-time-service-howto.html#_ptp_with_hardware_timestamping
 Nice=-10
 
 [Install]
