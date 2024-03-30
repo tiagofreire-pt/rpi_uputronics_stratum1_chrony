@@ -146,9 +146,11 @@ DEVICES="/dev/ttyAMA0 /dev/pps0″
 GPSD_OPTIONS="--nowait --badtime --passive --speed 115200"
 ```
 
+## Force the GNSS module to 115200 bps (if needed)
+> ubxtool -S 115200
+
 ## Restart the GPSd service
 > sudo systemctl restart gpsd
-
 
 > [!NOTE]
 > **For Uputronics GPS Extension Board:**
