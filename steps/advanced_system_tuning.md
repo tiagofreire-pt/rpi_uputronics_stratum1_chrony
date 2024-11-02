@@ -150,6 +150,33 @@ To revert to the default values:
 
 This could shave *circa* 40 usecs of response time over the `chrony ntpdata` statistics. Huge improvement on a NTP setup that has hardware timestamping and its higher accuracy.
 
+### Setting with persistance through a systemd Service
+
+Create the systemd service configuration file:
+> sudo nano /etc/systemd/system/eth-coalesce.service
+
+Insert the following settings in it:
+
+```
+[Unit]
+Description=Configure Ethernet interface Coalesce setting using ethtool
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/ethtool -C eth0 tx-usecs 4 rx-usecs 4
+ExecStop=/usr/sbin/ethtool -C eth0 tx-usecs 48 rx-usecs 48
+ 
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable the service and start it:
+> sudo systemctl enable eth-coalesce.service
+> 
+> sudo systemctl start eth-coalesce.service
+
 ## Chrony temperature compensation - turning the your Rpi 5B into a quasi-TCXO
 
 Using [this python code](https://www.satsignal.eu/ntp/Raspberry-Pi-ntpheat.html), I made a fast and empirical follow-up of the system clock frequency reported by `chrony tracking` over a range of temperatures, between 45ºC and 61ºC. Noticed a function minimum around 52ºC.
