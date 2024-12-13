@@ -142,7 +142,7 @@ Replace all the content with:
 ```
 START_DAEMON="true"
 USBAUTO="false"
-DEVICES="/dev/ttyAMA0 /dev/pps0″
+DEVICES="/dev/ttyAMA0 /dev/pps0"
 GPSD_OPTIONS="--nowait --badtime --passive --speed 115200"
 ```
 
