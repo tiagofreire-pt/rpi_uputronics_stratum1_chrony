@@ -65,11 +65,11 @@ This is my recipe for Raspberry Pi OS `lite` version `Bookworm`, freshly install
 
 Chrony vs 4.5 `server` tracking statistics after 1 day of uptime:
 
-![Chrony tracking after 1 day of uptime](./img/chrony_tracking_jan_2024.JPG)
+![Chrony tracking after several days of uptime](./img/chrony_tracking_dec_2024.PNG)
 
 Chrony vs 4.0 `client` tracking statistics after 1 day of uptime:
 
-![Chrony tracking after 1 day of uptime](./img/nanosecond_ntp_lan_jan_2024.JPG)
+![Chrony tracking after several days of uptime](./img/nanosecond_ntp_lan_dec_2024.PNG)
 
 Chrony vs 4.0 `client` tracking ntpdata of this server, after 1 day of uptime:
 
