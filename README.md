@@ -63,11 +63,11 @@ This is my recipe for Raspberry Pi OS `lite` version `Bookworm`, freshly install
 
 ## Sample metrics:
 
-Chrony vs 4.5 `server` tracking statistics after 1 day of uptime:
+Chrony vs 4.5 `server` tracking statistics after several days of uptime:
 
 ![Chrony tracking after several days of uptime](./img/chrony_tracking_dec_2024.PNG)
 
-Chrony vs 4.0 `client` tracking statistics after 1 day of uptime:
+Chrony vs 4.0 `client` tracking statistics after several days of uptime:
 
 ![Chrony tracking after several days of uptime](./img/nanosecond_ntp_lan_dec_2024.PNG)
 
